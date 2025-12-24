@@ -2,138 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SYSTEM BREACH</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Alert</title>
 
 <style>
 body {
-  margin: 0;
   background: black;
-  color: white;
+  color: #ff3333;
   font-family: monospace;
-  overflow: hidden;
-  animation: shake 0.15s infinite;
+  padding: 40px;
 }
 
-/* screen shake */
-@keyframes shake {
-  0% { transform: translate(0,0); }
-  25% { transform: translate(3px,-3px); }
-  50% { transform: translate(-3px,3px); }
-  75% { transform: translate(3px,3px); }
-  100% { transform: translate(0,0); }
+h1 {
+  text-align: center;
+  animation: blink 1s infinite;
 }
 
-/* rainbow glitch overlay */
-.glitch {
-  font-size: 32px;
-  margin-top: 40px;
-  animation: rainbow 0.2s infinite;
+@keyframes blink {
+  50% { opacity: 0; }
 }
 
-@keyframes rainbow {
-  0% { color: red; }
-  20% { color: yellow; }
-  40% { color: lime; }
-  60% { color: cyan; }
-  80% { color: magenta; }
-  100% { color: red; }
+.system {
+  margin-top: 30px;
+  color: #00ff00;
+  line-height: 1.6;
 }
 
-/* fake pages */
-#pages {
-  font-size: 14px;
-  text-align: left;
-  width: 90%;
-  margin: 20px auto;
-  height: 40vh;
-  overflow: hidden;
-}
-
-/* loading bar */
-.bar {
-  width: 80%;
-  height: 15px;
+button {
+  margin-top: 30px;
+  padding: 15px 30px;
+  font-size: 18px;
+  background: black;
+  color: red;
   border: 2px solid red;
-  margin: 20px auto;
-}
-.fill {
-  height: 100%;
-  width: 0%;
-  background: red;
-  animation: load 15s linear forwards;
-}
-@keyframes load {
-  to { width: 100%; }
+  cursor: pointer;
 }
 
-/* shadow figure */
-.figure {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 320px;
-  background: radial-gradient(circle at top, #111 20%, #000 70%);
-  opacity: 0.4;
-  animation: appear 3s infinite alternate;
+button:hover {
+  background: red;
+  color: black;
 }
-@keyframes appear {
-  from { opacity: 0.2; }
-  to { opacity: 0.5; }
+
+#count {
+  margin-top: 20px;
+  font-size: 18px;
+  color: white;
+}
+
+.note {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #777;
 }
 </style>
 </head>
 
 <body>
 
-<div class="glitch">⚠ DEVICE COMPROMISED ⚠</div>
-<p>Unauthorized access detected</p>
-<p id="count">Redirecting in 15 seconds</p>
+<h1>⚠ SYSTEM WARNING ⚠</h1>
 
-<div class="bar"><div class="fill"></div></div>
+<div class="system">
+This session has encountered a critical error.<br>
+Access to services has been temporarily disabled.<br>
+Return to the official platform to continue.
+</div>
 
-<div id="pages"></div>
+<button onclick="goRoblox()">PAY</button>
 
-<div class="figure"></div>
+<p id="count">Redirecting automatically in 5 seconds...</p>
+
+<p class="note">
+(This is a prank page. No payment is taken.)
+</p>
 
 <script>
-let time = 15;
-const count = document.getElementById("count");
+function goRoblox() {
+  window.location.href = "https://www.roblox.com";
+}
+
+let t = 5;
+const c = document.getElementById("count");
 
 const timer = setInterval(() => {
-  time--;
-  count.textContent = "Redirecting in " + time + " seconds";
-  if (time <= 0) {
+  t--;
+  c.textContent = "Redirecting automatically in " + t + " seconds...";
+  if (t <= 0) {
     clearInterval(timer);
     window.location.href = "https://www.roblox.com";
   }
 }, 1000);
-
-// fake page spam
-const pages = document.getElementById("pages");
-const fakeLines = [
-  "Loading system_page_01.html",
-  "Injecting memory block...",
-  "Opening background process...",
-  "Accessing device cache...",
-  "Bypassing interface...",
-  "Cloning session...",
-  "Downloading packets...",
-  "Rendering hidden page...",
-  "Syncing system...",
-  "Finalizing breach..."
-];
-
-setInterval(() => {
-  const line = document.createElement("div");
-  line.textContent = fakeLines[Math.floor(Math.random()*fakeLines.length)];
-  pages.appendChild(line);
-  if (pages.children.length > 30) {
-    pages.removeChild(pages.firstChild);
-  }
-}, 200);
 </script>
 
 </body>
