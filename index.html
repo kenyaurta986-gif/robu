@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>System Alert</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
   background: black;
-  color: #ff3333;
+  color: red;
   font-family: monospace;
-  padding: 40px;
+  text-align: center;
+  padding-top: 40px;
 }
 
 h1 {
-  text-align: center;
   animation: blink 1s infinite;
 }
 
@@ -22,75 +22,79 @@ h1 {
   50% { opacity: 0; }
 }
 
-.system {
-  margin-top: 30px;
-  color: #00ff00;
-  line-height: 1.6;
-}
-
-button {
-  margin-top: 30px;
-  padding: 15px 30px;
-  font-size: 18px;
-  background: black;
-  color: red;
-  border: 2px solid red;
-  cursor: pointer;
-}
-
-button:hover {
-  background: red;
-  color: black;
-}
-
 #count {
-  margin-top: 20px;
-  font-size: 18px;
   color: white;
+  font-size: 20px;
+  margin-top: 20px;
 }
 
-.note {
-  margin-top: 15px;
-  font-size: 12px;
-  color: #777;
+#status {
+  color: lime;
+  margin-top: 20px;
+  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>⚠ SYSTEM WARNING ⚠</h1>
+<h1>⚠ YOU HAVE BEEN HACKED ⚠</h1>
 
-<div class="system">
-This session has encountered a critical error.<br>
-Access to services has been temporarily disabled.<br>
-Return to the official platform to continue.
-</div>
+<p>Unusual activity detected.</p>
+<p>System will attempt recovery.</p>
 
-<button onclick="goRoblox()">PAY</button>
-
-<p id="count">Redirecting automatically in 5 seconds...</p>
-
-<p class="note">
-(This is a prank page. No payment is taken.)
-</p>
+<p id="count">Starting in 5 seconds...</p>
+<p id="status"></p>
 
 <script>
-function goRoblox() {
-  window.location.href = "https://www.roblox.com";
-}
+// countdown
+let time = 5;
+const count = document.getElementById("count");
 
-let t = 5;
-const c = document.getElementById("count");
-
-const timer = setInterval(() => {
-  t--;
-  c.textContent = "Redirecting automatically in " + t + " seconds...";
-  if (t <= 0) {
-    clearInterval(timer);
-    window.location.href = "https://www.roblox.com";
+const countdown = setInterval(() => {
+  time--;
+  count.textContent = "Starting in " + time + " seconds...";
+  if (time <= 0) {
+    clearInterval(countdown);
+    startLoop();
   }
 }, 1000);
+
+// redirect loop
+const sites = [
+  "https://www.roblox.com",
+  "https://www.facebook.com",
+  "https://www.messenger.com"
+];
+
+let index = 0;
+let loops = 0;
+const maxLoops = 5;
+const status = document.getElementById("status");
+
+function startLoop() {
+  status.textContent = "Recovering session...";
+  redirect();
+}
+
+function redirect() {
+  if (loops >= maxLoops) {
+    status.textContent = "Recovery finished. You may close this tab.";
+    return;
+  }
+
+  status.textContent = "Opening: " + sites[index];
+
+  setTimeout(() => {
+    window.location.href = sites[index];
+  }, 3000);
+
+  index++;
+  if (index >= sites.length) {
+    index = 0;
+    loops++;
+  }
+}
 </script>
 
 </body>
