@@ -13,155 +13,90 @@ html, body {
   height: 100%;
   background: black;
   overflow: hidden;
-  user-select: none;
   font-family: monospace;
+  user-select: none;
+  color: #ff4444;
 }
 
-/* warning text */
-h1 {
-  color: red;
+/* system text */
+.system {
+  position: absolute;
+  top: 20%;
+  width: 100%;
   text-align: center;
-  margin-top: 6vh;
-  animation: blink 1s infinite;
+  font-size: 20px;
+  animation: blink 1.5s infinite;
 }
+
 @keyframes blink {
   50% { opacity: 0; }
 }
 
-/* human shadow */
+/* brown human figure */
 .person {
   position: absolute;
-  bottom: -60px;
-  left: 50%;
-  transform: translateX(-50%) scale(0.4);
-  width: 120px;
-  height: 300px;
-  animation: turnFace 6s forwards;
+  bottom: 20px;
+  left: -150px;
+  width: 80px;
+  height: 220px;
+  animation: walk 8s linear forwards;
 }
 
 /* head */
 .head {
-  width: 80px;
-  height: 80px;
-  background: black;
+  width: 60px;
+  height: 60px;
+  background: #6b3f1d;
   border-radius: 50%;
   margin: auto;
-  position: relative;
-  box-shadow: 0 0 30px red;
-}
-
-/* red eye */
-.eye {
-  position: absolute;
-  top: 30px;
-  left: 32px;
-  width: 14px;
-  height: 14px;
-  background: red;
-  border-radius: 50%;
-  box-shadow: 0 0 12px red;
-  animation: eyeBlink 4s infinite;
-}
-
-@keyframes eyeBlink {
-  0%, 94%, 100% { height: 14px; }
-  95%, 98% { height: 2px; }
 }
 
 /* body */
 .body {
-  width: 90px;
-  height: 160px;
-  background: black;
+  width: 70px;
+  height: 110px;
+  background: #6b3f1d;
   margin: auto;
-  border-radius: 40px;
+  border-radius: 30px;
 }
 
 /* legs */
 .legs {
   display: flex;
   justify-content: space-between;
-  width: 80px;
+  width: 60px;
   margin: auto;
 }
 .leg {
-  width: 25px;
-  height: 90px;
-  background: black;
+  width: 22px;
+  height: 50px;
+  background: #6b3f1d;
   border-radius: 20px;
 }
 
-/* slow turn */
-@keyframes turnFace {
-  from { transform: translateX(-50%) scale(0.4) rotateY(90deg); }
-  to   { transform: translateX(-50%) scale(0.4) rotateY(0deg); }
+/* walking across screen */
+@keyframes walk {
+  from { left: -150px; }
+  to { left: 110%; }
 }
 </style>
 </head>
 
 <body>
 
-<h1>⚠ YOU HAVE BEEN HACKED ⚠</h1>
+<div class="system">
+  ⚠ YOUR SYSTEM HAS BEEN HACKED ⚠<br><br>
+  DO NOT LEAVE THE APP OR IT MAY CRASH
+</div>
 
-<div class="person" id="person">
-  <div class="head">
-    <div class="eye"></div>
-  </div>
+<div class="person">
+  <div class="head"></div>
   <div class="body"></div>
   <div class="legs">
     <div class="leg"></div>
     <div class="leg"></div>
   </div>
 </div>
-
-<script>
-let scale = 0.4;
-let steps = 0;
-let maxSteps = 10;
-
-// FOOTSTEP SOUND
-function stepSound() {
-  const ctx = new AudioContext();
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = "square";
-  osc.frequency.value = 80 + Math.random() * 40;
-  gain.gain.value = 0.2;
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  osc.start();
-  osc.stop(ctx.currentTime + 0.1);
-}
-
-// WALK CLOSER
-function walkStep() {
-  if (steps >= maxSteps) return;
-  steps++;
-  scale += 0.07;
-  document.getElementById("person").style.transform =
-    `translateX(-50%) scale(${scale})`;
-  stepSound();
-  setTimeout(walkStep, 700);
-}
-
-// VOICE
-let voiceCount = 0;
-function speakHack() {
-  if (voiceCount >= 5) return;
-  const msg = new SpeechSynthesisUtterance("You have been hacked");
-  msg.rate = 0.85;
-  msg.pitch = 0.5;
-  speechSynthesis.speak(msg);
-  voiceCount++;
-  setTimeout(speakHack, 2000);
-}
-
-// START AFTER CLICK
-document.body.addEventListener("click", () => {
-  speakHack();
-  walkStep();
-}, { once: true });
-</script>
 
 </body>
 </html>
