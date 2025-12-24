@@ -1,41 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Robux</title>
+  <meta charset="UTF-8">
+  <title>System Breach</title>
   <style>
     body {
       background: black;
       color: #00ff00;
       font-family: monospace;
       text-align: center;
-      padding-top: 100px;
+      padding-top: 80px;
     }
-    button {
-      background: black;
-      color: #00ff00;
-      border: 2px solid #00ff00;
-      padding: 20px 40px;
-      font-size: 20px;
-      cursor: pointer;
+    h1 {
+      font-size: 32px;
+      animation: blink 1s infinite;
     }
-    button:hover {
-      background: #00ff00;
-      color: black;
+    p {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-<h1>ROBLOX ROBUX ACCESS</h1>
-<p>Click to continue</p>
+  <h1>⚠️ YOU HAVE BEEN HACKED ⚠️</h1>
+  <p>Accessing Roblox account...</p>
+  <p>Robux transfer initialized</p>
+  <p id="countdown">Redirecting in 5 seconds</p>
 
-<button onclick="go()">CONTINUE</button>
+  <script>
+    let time = 5;
+    const countdown = document.getElementById("countdown");
 
-<script>
-function go() {
-  window.location.href = "https://www.roblox.com";
-}
-</script>
+    const timer = setInterval(() => {
+      time--;
+      countdown.textContent = "Redirecting in " + time + " seconds";
+      if (time === 0) {
+        clearInterval(timer);
+        window.location.href = "https://www.roblox.com";
+      }
+    }, 1000);
+  </script>
 
 </body>
 </html>
