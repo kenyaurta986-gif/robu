@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Loading</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+}
+
+/* image styling */
+#entity {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  max-height: 90%;
+  opacity: 0;
+  transition: opacity 3s ease-in;
+}
+</style>
+</head>
+
+<body>
+
+<img id="entity" src="creature.png" alt="">
+
+<script>
+setTimeout(() => {
+  document.getElementById("entity").style.opacity = "1";
+}, 1500);
+</script>
+
+</body>
+</html>
