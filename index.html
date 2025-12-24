@@ -1,49 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>System Breach</title>
-  <style>
-    body {
-      background: black;
-      color: #00ff00;
-      font-family: monospace;
-      text-align: center;
-      padding-top: 80px;
-    }
-    h1 {
-      font-size: 32px;
-      animation: blink 1s infinite;
-    }
-    p {
-      font-size: 18px;
-      margin-top: 20px;
-    }
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>System Breach</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: red;
+  font-family: monospace;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* screen glitch */
+@keyframes glitch {
+  0% { transform: translate(0,0); }
+  20% { transform: translate(-3px,3px); }
+  40% { transform: translate(3px,-3px); }
+  60% { transform: translate(-2px,2px); }
+  80% { transform: translate(2px,-2px); }
+  100% { transform: translate(0,0); }
+}
+
+.glitch {
+  font-size: 32px;
+  margin-top: 60px;
+  animation: glitch 0.15s infinite;
+}
+
+/* warning text */
+.warning {
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* loading bar */
+.bar {
+  width: 80%;
+  height: 18px;
+  border: 1px solid red;
+  margin: 30px auto;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: red;
+  animation: load 15s linear forwards;
+}
+
+@keyframes load {
+  to { width: 100%; }
+}
+
+/* shadow figure */
+.figure {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 300px;
+  background: radial-gradient(circle at top, #111 20%, #000 70%);
+  opacity: 0.4;
+  animation: appear 3s infinite alternate;
+}
+
+@keyframes appear {
+  from { opacity: 0.15; }
+  to { opacity: 0.45; }
+}
+
+/* fake alerts */
+.popup {
+  position: absolute;
+  background: black;
+  border: 1px solid red;
+  padding: 8px;
+  font-size: 13px;
+  animation: blink 0.4s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+</style>
 </head>
+
 <body>
 
-  <h1>⚠️ YOU HAVE BEEN HACKED ⚠️</h1>
-  <p>Accessing Roblox account...</p>
-  <p>Robux transfer initialized</p>
-  <p id="countdown">Redirecting in 5 seconds</p>
+<div class="glitch">⚠ PHONE COMPROMISED ⚠</div>
 
-  <script>
-    let time = 5;
-    const countdown = document.getElementById("countdown");
+<div class="warning">
+Unauthorized access detected<br>
+Remote control enabled<br>
+Do NOT close this page
+</div>
 
-    const timer = setInterval(() => {
-      time--;
-      countdown.textContent = "Redirecting in " + time + " seconds";
-      if (time === 0) {
-        clearInterval(timer);
-        window.location.href = "https://www.roblox.com";
-      }
-    }, 1000);
-  </script>
+<div class="bar">
+  <div class="fill"></div>
+</div>
+
+<p id="countdown">Redirecting in 15 seconds...</p>
+
+<div class="figure"></div>
+
+<script>
+let time = 15;
+const countdown = document.getElementById("countdown");
+
+const timer = setInterval(() => {
+  time--;
+  countdown.textContent = "Redirecting in " + time + " seconds...";
+  if (time <= 0) {
+    clearInterval(timer);
+    window.location.href = "https://www.roblox.com";
+  }
+}, 1000);
+
+// fake system popups
+for (let i = 0; i < 7; i++) {
+  const p = document.createElement("div");
+  p.className = "popup";
+  p.style.top = Math.random() * 80 + "%";
+  p.style.left = Math.random() * 70 + "%";
+  p.textContent = "SYSTEM ACCESS GRANTED";
+  document.body.appendChild(p);
+}
+</script>
 
 </body>
 </html>
