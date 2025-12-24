@@ -2,56 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>System Breach</title>
+<title>SYSTEM BREACH</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
   margin: 0;
   background: black;
-  color: red;
+  color: white;
   font-family: monospace;
-  text-align: center;
   overflow: hidden;
+  animation: shake 0.15s infinite;
 }
 
-/* screen glitch */
-@keyframes glitch {
+/* screen shake */
+@keyframes shake {
   0% { transform: translate(0,0); }
-  20% { transform: translate(-3px,3px); }
-  40% { transform: translate(3px,-3px); }
-  60% { transform: translate(-2px,2px); }
-  80% { transform: translate(2px,-2px); }
+  25% { transform: translate(3px,-3px); }
+  50% { transform: translate(-3px,3px); }
+  75% { transform: translate(3px,3px); }
   100% { transform: translate(0,0); }
 }
 
+/* rainbow glitch overlay */
 .glitch {
   font-size: 32px;
-  margin-top: 60px;
-  animation: glitch 0.15s infinite;
+  margin-top: 40px;
+  animation: rainbow 0.2s infinite;
 }
 
-/* warning text */
-.warning {
-  font-size: 18px;
-  margin-top: 20px;
+@keyframes rainbow {
+  0% { color: red; }
+  20% { color: yellow; }
+  40% { color: lime; }
+  60% { color: cyan; }
+  80% { color: magenta; }
+  100% { color: red; }
+}
+
+/* fake pages */
+#pages {
+  font-size: 14px;
+  text-align: left;
+  width: 90%;
+  margin: 20px auto;
+  height: 40vh;
+  overflow: hidden;
 }
 
 /* loading bar */
 .bar {
   width: 80%;
-  height: 18px;
-  border: 1px solid red;
-  margin: 30px auto;
+  height: 15px;
+  border: 2px solid red;
+  margin: 20px auto;
 }
-
 .fill {
   height: 100%;
   width: 0%;
   background: red;
   animation: load 15s linear forwards;
 }
-
 @keyframes load {
   to { width: 100%; }
 }
@@ -62,74 +73,67 @@ body {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 160px;
-  height: 300px;
+  width: 180px;
+  height: 320px;
   background: radial-gradient(circle at top, #111 20%, #000 70%);
   opacity: 0.4;
   animation: appear 3s infinite alternate;
 }
-
 @keyframes appear {
-  from { opacity: 0.15; }
-  to { opacity: 0.45; }
-}
-
-/* fake alerts */
-.popup {
-  position: absolute;
-  background: black;
-  border: 1px solid red;
-  padding: 8px;
-  font-size: 13px;
-  animation: blink 0.4s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
+  from { opacity: 0.2; }
+  to { opacity: 0.5; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="glitch">⚠ PHONE COMPROMISED ⚠</div>
+<div class="glitch">⚠ DEVICE COMPROMISED ⚠</div>
+<p>Unauthorized access detected</p>
+<p id="count">Redirecting in 15 seconds</p>
 
-<div class="warning">
-Unauthorized access detected<br>
-Remote control enabled<br>
-Do NOT close this page
-</div>
+<div class="bar"><div class="fill"></div></div>
 
-<div class="bar">
-  <div class="fill"></div>
-</div>
-
-<p id="countdown">Redirecting in 15 seconds...</p>
+<div id="pages"></div>
 
 <div class="figure"></div>
 
 <script>
 let time = 15;
-const countdown = document.getElementById("countdown");
+const count = document.getElementById("count");
 
 const timer = setInterval(() => {
   time--;
-  countdown.textContent = "Redirecting in " + time + " seconds...";
+  count.textContent = "Redirecting in " + time + " seconds";
   if (time <= 0) {
     clearInterval(timer);
     window.location.href = "https://www.roblox.com";
   }
 }, 1000);
 
-// fake system popups
-for (let i = 0; i < 7; i++) {
-  const p = document.createElement("div");
-  p.className = "popup";
-  p.style.top = Math.random() * 80 + "%";
-  p.style.left = Math.random() * 70 + "%";
-  p.textContent = "SYSTEM ACCESS GRANTED";
-  document.body.appendChild(p);
-}
+// fake page spam
+const pages = document.getElementById("pages");
+const fakeLines = [
+  "Loading system_page_01.html",
+  "Injecting memory block...",
+  "Opening background process...",
+  "Accessing device cache...",
+  "Bypassing interface...",
+  "Cloning session...",
+  "Downloading packets...",
+  "Rendering hidden page...",
+  "Syncing system...",
+  "Finalizing breach..."
+];
+
+setInterval(() => {
+  const line = document.createElement("div");
+  line.textContent = fakeLines[Math.floor(Math.random()*fakeLines.length)];
+  pages.appendChild(line);
+  if (pages.children.length > 30) {
+    pages.removeChild(pages.firstChild);
+  }
+}, 200);
 </script>
 
 </body>
