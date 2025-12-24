@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>System Error</title>
+<title>System Failure</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -11,13 +11,13 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;            /* unmovable */
   background: black;
   font-family: monospace;
-  user-select: none;            /* no copy/select */
+  user-select: none;
+  overflow: hidden;
 }
 
-/* screen shake */
+/* shake */
 @keyframes shake {
   0% { transform: translate(0,0); }
   25% { transform: translate(2px,-2px); }
@@ -26,61 +26,14 @@ html, body {
   100% { transform: translate(0,0); }
 }
 
-body {
+#warning {
   animation: shake 0.15s infinite;
   color: red;
-}
-
-/* fake stain background */
-.stain {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(120,0,0,0.6), transparent 70%);
-  top: 20%;
-  left: 10%;
-}
-
-.stain.two {
-  top: 60%;
-  left: 60%;
-}
-
-/* monster silhouette */
-.monster {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 300px;
-  background: black;
-  border-radius: 50% 50% 20% 20%;
-  box-shadow: 0 0 40px red;
-}
-
-.eye {
-  position: absolute;
-  top: 80px;
-  width: 15px;
-  height: 15px;
-  background: red;
-  border-radius: 50%;
-}
-
-.eye.left { left: 60px; }
-.eye.right { right: 60px; }
-
-/* text */
-.center {
-  position: absolute;
-  top: 15%;
-  width: 100%;
   text-align: center;
+  padding-top: 60px;
 }
 
 h1 {
-  font-size: 28px;
   animation: blink 1s infinite;
 }
 
@@ -91,17 +44,65 @@ h1 {
 #count {
   color: white;
   font-size: 18px;
-  margin-top: 20px;
+}
+
+/* monster */
+.monster {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 260px;
+  background: black;
+  box-shadow: 0 0 40px red;
+  border-radius: 50% 50% 20% 20%;
+}
+
+.eye {
+  position: absolute;
+  top: 80px;
+  width: 14px;
+  height: 14px;
+  background: red;
+  border-radius: 50%;
+}
+
+.eye.left { left: 55px; }
+.eye.right { right: 55px; }
+
+/* split screen */
+#split {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.panel {
+  width: 33.33%;
+  height: 100%;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+.roblox { background: #1b1b1b; }
+.facebook { background: #1877f2; }
+.messenger { background: #8a3ffc; }
+
+.panel:hover {
+  filter: brightness(1.2);
 }
 </style>
 </head>
 
 <body>
 
-<div class="stain"></div>
-<div class="stain two"></div>
-
-<div class="center">
+<div id="warning">
   <h1>⚠ YOU HAVE BEEN HACKED ⚠</h1>
   <p>System instability detected</p>
   <p id="count">Redirecting in 5 seconds...</p>
@@ -112,18 +113,40 @@ h1 {
   <div class="eye right"></div>
 </div>
 
+<div id="split">
+  <div class="panel roblox" onclick="go('https://www.roblox.com')">
+    ROBLOX
+  </div>
+  <div class="panel facebook" onclick="go('https://www.facebook.com')">
+    FACEBOOK
+  </div>
+  <div class="panel messenger" onclick="go('https://www.messenger.com')">
+    MESSENGER
+  </div>
+</div>
+
 <script>
 let t = 5;
-const c = document.getElementById("count");
+const count = document.getElementById("count");
 
-const timer = setInterval(() => {
+const countdown = setInterval(() => {
   t--;
-  c.textContent = "Redirecting in " + t + " seconds...";
+  count.textContent = "Redirecting in " + t + " seconds...";
   if (t <= 0) {
-    clearInterval(timer);
-    window.location.href = "https://www.roblox.com";
+    clearInterval(countdown);
+    showSplit();
   }
 }, 1000);
+
+function showSplit() {
+  document.getElementById("warning").style.display = "none";
+  document.querySelector(".monster").style.display = "none";
+  document.getElementById("split").style.display = "block";
+}
+
+function go(url) {
+  window.location.href = url;
+}
 </script>
 
 </body>
